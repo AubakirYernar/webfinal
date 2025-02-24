@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Админ-панель</title>
+    <style>
+        /* Добавьте стили из предыдущей версии */
+        .user-table, .todo-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .danger {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Админ-панель</h1>
+    <a href="/logout">Выйти</a>
+
+    <h2>Пользователи</h2>
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>Логин</th>
+                <th>Email</th>
+                <th>Админ</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(user => { %>
+            <tr>
+                <form action="/admin/update-user/<%= user._id %>" method="POST">
+                    <td><input type="text" name="username" value="<%= user.username %>"></td>
+                    <td><input type="email" name="email" value="<%= user.email %>"></td>
+                    <td>
+                        <input type="checkbox" name="isAdmin" <%= user.isAdmin ? 'checked' : '' %>>
+                    </td>
+                    <td>
+                        <input type="password" name="password" placeholder="Новый пароль">
+                        <button type="submit">Обновить</button>
+                        <a href="/admin/delete-user/<%= user._id %>" class="danger">Удалить</a>
+                    </td>
+                </form>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <h2>Все задачи</h2>
+    <table class="todo-table">
+        <thead>
+            <tr>
+                <th>Заголовок</th>
+                <th>Описание</th>
+                <th>Пользователь</th>
+                <th>Статус</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% todos.forEach(todo => { %>
+            <tr>
+                <td><%= todo.title %></td>
+                <td><%= todo.description %></td>
+                <td><%= todo.user.username %></td>
+                <td><%= todo.completed ? '✓' : '◯' %></td>
+                <td>
+                    <a href="/admin/delete-todo/<%= todo._id %>" class="danger">Удалить</a>
+                </td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>

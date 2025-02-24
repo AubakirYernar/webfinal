@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Пользователь</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            width: 300px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        div img {
+            max-width: 200px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Профиль: <%= user.username %></h1>
+    <p>Email: <%= user.email %></p>
+    
+    <h2>Смена пароля:</h2>
+    <form action="/user/change-password" method="POST">
+        <input type="password" name="oldPassword" placeholder="Старый пароль">
+        <input type="password" name="newPassword" placeholder="Новый пароль">
+        <button type="submit">Сменить</button>
+    </form>
+
+    <h2>Загрузка изображений</h2>
+    <form action="/user/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*">
+        <button type="submit">Загрузить</button>
+    </form>
+
+    <div>
+        <% user.images.forEach((img, i) => { %>
+            <img src="data:image/png;base64,<%= img %>" alt="Image <%= i %>">
+        <% }); %>
+    </div>
+
+    <!-- Замените существующий блок Todo на этот код -->
+<h2>Список дел</h2>
+<table class="todo-table">
+    <thead>
+        <tr>
+            <th>Статус</th>
+            <th>Название</th>
+            <th>Описание</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% todos.forEach(todo => { %>
+        <tr class="<%= todo.completed ? 'completed' : '' %>">
+            <td>
+                <form action="/user/todos/<%= todo._id %>/toggle" method="POST">
+                    <button type="submit" class="status-toggle">
+                        <%= todo.completed ? '✓' : '◯' %>
+                    </button>
+                </form>
+            </td>
+            <td><%= todo.title %></td>
+            <td><%= todo.description %></td>
+            <td>
+                <form action="/user/todos/<%= todo._id %>/delete" method="POST">
+                    <button type="submit" class="delete-btn">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        <% }); %>
+    </tbody>
+</table>
+
+<form action="/user/todos" method="POST" class="add-todo-form">
+    <input type="text" name="title" placeholder="Название" required>
+    <input type="text" name="description" placeholder="Описание">
+    <button type="submit">Добавить задачу</button>
+</form>
+
+<style>
+    .todo-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background: white;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .todo-table th,
+    .todo-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .todo-table th {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .todo-table tr.completed {
+        background-color: #f0fff0;
+    }
+
+    .todo-table tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    .status-toggle {
+        background: none;
+        border: none;
+        font-size: 1.2em;
+        cursor: pointer;
+        color: #28a745;
+    }
+
+    .delete-btn {
+        background-color: #dc3545;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    .add-todo-form {
+        margin-top: 20px;
+        background: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .add-todo-form input {
+        margin-right: 10px;
+        padding: 8px;
+        width: 200px;
+    }
+</style>
+
+    <a href="/logout">Выйти</a>
+</body>
+</html>

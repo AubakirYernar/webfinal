@@ -1,0 +1,17 @@
+{
+  "name": "assi4_web_try3",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000q\u0000w\u0000e\u0000r\u0000t\u0000y\u0000u\u00001\u0000\r\u0000 \u0000",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
