@@ -1,96 +1,94 @@
-# webfinal
+# Task Management System
 
-Todo Management System with Admin Panel
+A Node.js web application for user authentication, task management, and admin panel functionality using MongoDB and JWT authentication.
 
-A comprehensive task management application with user authentication and administrative controls. Built using Node.js, Express, MongoDB, JWT, and EJS.
+## Features
 
-Features
+- **User Authentication**: 
+  - Registration & Login with JWT
+  - Password hashing using bcrypt
+  - Session management with cookies
 
-User Features
+- **Task Management**:
+  - Create/Read/Update/Delete todos
+  - Mark tasks as complete/incomplete
+  - User-specific task lists
 
-Secure JWT-based registration and login.
+- **Admin Panel**:
+  - View all users and their tasks
+  - Modify user details
+  - Delete users/tasks
+  - Admin access control
 
-Password reset functionality.
+## Technologies
 
-Profile management: update username/email, change password, upload profile images.
+- Backend: Node.js, Express
+- Database: MongoDB
+- Authentication: JWT
+- Templating: EJS
+- File Upload: Multer
 
-Todo operations: create, read, update, delete tasks, mark tasks as complete/incomplete.
+## Setup Instructions
 
-Responsive task table view.
+### Prerequisites
+- Node.js v18+
+- MongoDB Atlas account or local MongoDB
+- Basic terminal knowledge
 
-Admin Features
+### Installation
+1. Clone repository:
+``bash
+git clone https://github.com/yourusername/task-management-system.git
+cd task-management-system
 
-Dashboard: view all users, manage user roles (Admin/User), monitor system-wide todos.
+2. npm install
 
-User management: edit/delete accounts, reset passwords, view activity.
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+PORT=3000
 
-Content control: delete todos, export user data (CSV/JSON).
+3. Access in browser: http://localhost:3000
 
-Getting Started
+# API Documentation
+- Authentication
+Endpoint  	Method	Description       	Request Body
+/register 	POST	  Create new user	    {username, email, password}
+/login	    POST	  User login	        {username, password}
+/logout     GET    	Logout user	         -
 
-Prerequisites
+- User Operations
+Endpoint	             Method   	Description
+/user	                 GET	      Get user profile
+/user/change-password	 POST	      Change password
+/user/upload	         POST      	Upload profile image
 
-Node.js v16+
+- Todo Operations
+Endpoint	              Method	 Description	               Parameters
+/user/todos	            POST	   Create new todo	           {title, description}
+/user/todos/:id/delete	POST	   Delete todo	               id (MongoDB ObjectId)
+/user/todos/:id/toggle	POST	   Toggle todo status	         id (MongoDB ObjectId)
 
-MongoDB (local or Atlas cluster)
+- Admin Operations
+Endpoint	                Method	   Description
+/admin	                  GET	       Admin dashboard
+/admin/create           	POST	     Create new user
+/admin/update-user/:id	  POST	     Update user details
+/admin/delete-user/:id	  POST	     Delete user
+/admin/delete-todo/:id	  POST       Delete any todo
 
-NPM/Yarn
 
-Installation
+# Project stucture
 
-Clone the repository:
-git clone https://github.com/yourusername/todo-manager.git
-cd todo-manager
-
-Install dependencies:
-npm install
-
-Configure environment variables:
-
-Copy .env.example to .env.
-
-Update .env with your MongoDB URI, JWT secret, and port.
-
-Running the Application
-Start the server: npm start.
-Access the app at http://localhost:3000.
-
-System Architecture
-
-Config: Database setup.
-
-Controllers: Authentication, user, and todo logic.
-
-Middlewares: JWT verification and admin role checks.
-
-Models: MongoDB schemas for users and todos.
-
-Routes: API endpoints for auth, users, and admin.
-
-Views: EJS templates for frontend rendering.
-
-Security Features
-
-JWT authentication with token expiration.
-
-Password hashing using BCrypt.
-
-Role-based access control (Admin vs. User).
-
-Input validation and sanitization.
-
-Helmet middleware for HTTP headers.
-
-Key Dependencies
-
-Express (web framework).
-
-Mongoose (MongoDB ODM).
-
-JSON Web Tokens (authentication).
-
-BCrypt (password hashing).
-
-Multer (file uploads).
-
-EJS (templating engine).
+project/
+├── models/
+│   ├── User.js
+│   └── Todo.js
+├── views/
+│   ├── index.ejs
+│   ├── login.ejs
+│   ├── register.ejs
+│   ├── user.ejs
+│   └── admin.ejs
+├── app.js
+├── package.json
+└── .env
